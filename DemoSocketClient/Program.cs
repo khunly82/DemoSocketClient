@@ -14,6 +14,20 @@ connection.On<string>("newUser", (user) =>
     Console.WriteLine($"{user} vient de se connecter");
 });
 
+connection.On<Message>("newMessage", (m) =>
+{
+    Console.WriteLine($"{m.Author} a écrit: {m.Content}");
+});
+
 
 // permet de gerder la console ouverte
-while (true) ;
+while (true)
+{
+    string m = Console.ReadLine()!;
+    await connection.SendAsync("SendMessage", m);
+}
+
+class Message { 
+    public string Author { get; set; } 
+    public string Content { get; set; }
+}
